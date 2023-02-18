@@ -59,7 +59,8 @@ function block2md(yBlock: YBlock, yBlocks: YBlocks, padLeft = ""): string {
       break;
     }
     case "affine:code": {
-      content = "```" + yBlock.get("prop:language") + "\n" + toMd() + "```\n\n";
+      const lang = (yBlock.get("prop:language") as string).toLowerCase();
+      content = "```" + lang + "\n" + toMd() + "```\n\n";
       break;
     }
     case "affine:embed": {
