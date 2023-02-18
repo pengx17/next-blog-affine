@@ -115,6 +115,8 @@ export interface WorkspacePage {
   id: string;
   title: string;
   createDate: string;
+  trash?: boolean;
+  favorite?: boolean;
   md?: string;
 }
 

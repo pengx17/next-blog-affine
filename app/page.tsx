@@ -14,7 +14,7 @@ export default function Home() {
         </span>
       </div>
       <div className="sm:flex-1 sm:py-24 max-h-full overflow-auto px-12 py-12">
-        {pages.map(({ id, title, createDate }) => (
+        {pages.filter(p => !p.trash).map(({ id, title, createDate }) => (
           <div className="mb-6" key={id}>
             <Link
               href={`/posts/${id}`}
