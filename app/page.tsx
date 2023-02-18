@@ -24,7 +24,7 @@ export default function Home() {
             </Link>
             <br />
             <span className="text-xs text-gray-600">
-              <DateString dateString={createDate} />
+              <DateString date={createDate} />
             </span>
           </div>
         ))}
