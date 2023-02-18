@@ -131,7 +131,8 @@ export const getWorkspacePages = cache(
       console.log(`got doc from affine public workspace API in ${elapsed}ms`);
 
       return meta.pages;
-    } catch {
+    } catch (err) {
+      console.error(err);
       if (retry > 0) {
         return getWorkspacePages(retry - 1);
       }
@@ -169,7 +170,8 @@ export const getWorkspacePageMD = cache(
       console.log(`got doc from affine public workspace API in ${elapsed}ms`);
 
       return pageWithMD;
-    } catch {
+    } catch (error) {
+      console.error(error);
       throw new Error("could not get workspace doc");
     }
   }
