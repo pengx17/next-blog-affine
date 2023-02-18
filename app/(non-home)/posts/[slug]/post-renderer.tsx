@@ -16,7 +16,7 @@ export function PostRenderer({ createDate, md, title }: WorkspacePage) {
         {title}
       </h1>
       <div className="text-gray-600 mb-8 ml-0.5">
-        <DateString dateString={createDate} />
+        <DateString date={createDate} />
       </div>
       {/* @ts-expect-error Server Component */}
       <MDXRemote

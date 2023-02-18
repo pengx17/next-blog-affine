@@ -114,7 +114,7 @@ async function getYDoc(id: string) {
 export interface WorkspacePage {
   id: string;
   title: string;
-  createDate: string;
+  createDate: number;
   trash?: boolean;
   favorite?: boolean;
   md?: string;
@@ -136,14 +136,8 @@ export const getWorkspacePages = cache(
       const pages = meta.pages as WorkspacePage[];
 
       pages.sort((a, b) => {
-        if (a.createDate < b.createDate) {
-          return -1;
-        } else if (a.createDate > b.createDate) {
-          return 1;
-        } else {
-          return 0;
-        }
-      })
+        return b.createDate - a.createDate;
+      });
 
       return meta.pages;
     } catch (err) {
@@ -160,9 +154,7 @@ export const getWorkspacePageMD = cache(
   async (id: string): Promise<WorkspacePage | null> => {
     try {
       const start = performance.now();
-      console.log(
-        `getting page "${id}" from affine public workspace API ...`
-      );
+      console.log(`getting page "${id}" from affine public workspace API ...`);
 
       const yDoc = await getYDoc(workspaceId);
       const meta = yDoc.getMap("space:meta").toJSON();
