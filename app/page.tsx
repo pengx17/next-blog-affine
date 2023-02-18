@@ -33,4 +33,4 @@ export default function Home() {
   );
 }
 
-export const revalidate = 30;
+export const revalidate = 600;

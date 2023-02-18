@@ -23,4 +23,4 @@ export async function generateStaticParams() {
   }));
 }
 
-export const revalidate = 10;
+export const revalidate = 60;
