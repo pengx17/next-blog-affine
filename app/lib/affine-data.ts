@@ -133,6 +133,18 @@ export const getWorkspacePages = cache(
       console.log(`got doc from affine public workspace API in ${elapsed}ms`);
       console.log(meta.pages);
 
+      const pages = meta.pages as WorkspacePage[];
+
+      pages.sort((a, b) => {
+        if (a.createDate < b.createDate) {
+          return -1;
+        } else if (a.createDate > b.createDate) {
+          return 1;
+        } else {
+          return 0;
+        }
+      })
+
       return meta.pages;
     } catch (err) {
       console.error(err);
