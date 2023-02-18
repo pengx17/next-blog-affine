@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   const pages = await getWorkspacePages();
   return pages.map((page) => ({
     id: page.id,
-    slug: page.title,
+    slug: page.id,
   }));
 }
 

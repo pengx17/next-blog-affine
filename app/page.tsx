@@ -17,7 +17,7 @@ export default function Home() {
         {pages.map(({ id, title, createDate }) => (
           <div className="mb-6" key={id}>
             <Link
-              href={`/posts/${title}`}
+              href={`/posts/${id}`}
               className="text-xl font-semibold font-serif"
             >
               {title}

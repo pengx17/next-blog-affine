@@ -140,16 +140,16 @@ export const getWorkspacePages = cache(
 );
 
 export const getWorkspacePageMD = cache(
-  async (title: string): Promise<WorkspacePage | null> => {
+  async (id: string): Promise<WorkspacePage | null> => {
     try {
       const start = performance.now();
       console.log(
-        `getting page "${title}" from affine public workspace API ...`
+        `getting page "${id}" from affine public workspace API ...`
       );
 
       const yDoc = await getYDoc(workspaceId);
       const meta = yDoc.getMap("space:meta").toJSON();
-      const page = meta.pages.find((p: any) => p.title === title);
+      const page = meta.pages.find((p: any) => p.id === id);
 
       if (!page) {
         return null;
