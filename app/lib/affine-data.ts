@@ -129,6 +129,7 @@ export const getWorkspacePages = cache(
       const elapsed = (performance.now() - start).toFixed(2);
 
       console.log(`got doc from affine public workspace API in ${elapsed}ms`);
+      console.log(meta.pages);
 
       return meta.pages;
     } catch (err) {
