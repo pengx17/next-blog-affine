@@ -1,6 +1,7 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 import { getMdxComponents } from "../../../components/mdx-components";
 import { DateString } from "../../../date";
@@ -22,7 +23,7 @@ export function PostRenderer({ createDate, md, title }: WorkspacePage) {
         options={{
           mdxOptions: {
             // development: process.env.NODE_ENV !== "production",
-            remarkPlugins: [],
+            remarkPlugins: [remarkGfm],
             rehypePlugins: [rehypeSlug, rehypeShiki],
           },
         }}
