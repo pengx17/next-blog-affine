@@ -1,8 +1,8 @@
 import { cache } from "react";
 import * as Y from "yjs";
-import {fetch} from 'undici';
+import { fetch } from "undici";
 
-const workspaceId = 'mWn__KSlOgS1tdDEjdX6P';
+const workspaceId = "mWn__KSlOgS1tdDEjdX6P";
 const target = "https://app.affine.pro";
 
 import { deltaToMd } from "./delta-to-md";
@@ -117,53 +117,59 @@ export interface WorkspacePage {
   md?: string;
 }
 
-export const getWorkspacePages = cache(async (retry = 3): Promise<WorkspacePage[]> => {
-  try {
-    const start = performance.now();
-    console.log(`getting doc from affine public workspace API ...(${retry})`);
-    
-    const yDoc = await getYDoc(workspaceId);
-    const meta = yDoc.getMap("space:meta").toJSON();
-    const elapsed = (performance.now() - start).toFixed(2);
+export const getWorkspacePages = cache(
+  async (retry = 3): Promise<WorkspacePage[]> => {
+    try {
+      const start = performance.now();
+      console.log(`getting doc from affine public workspace API ...(${retry})`);
 
-    console.log(`got doc from affine public workspace API in ${elapsed}ms`);
+      const yDoc = await getYDoc(workspaceId);
+      const meta = yDoc.getMap("space:meta").toJSON();
+      const elapsed = (performance.now() - start).toFixed(2);
 
-    return meta.pages;
-  } catch {
-    if (retry > 0) {
-      return getWorkspacePages(retry - 1);
+      console.log(`got doc from affine public workspace API in ${elapsed}ms`);
+
+      return meta.pages;
+    } catch {
+      if (retry > 0) {
+        return getWorkspacePages(retry - 1);
+      }
+      throw new Error("could not get workspace doc");
     }
-    throw new Error("could not get workspace doc");
   }
-});
+);
 
-export const getWorkspacePageMD = cache(async (title: string): Promise<WorkspacePage|null> => {
-  try {
-    const start = performance.now();
-    console.log(`getting page "${title}" from affine public workspace API ...`);
-    
-    const yDoc = await getYDoc(workspaceId);
-    const meta = yDoc.getMap("space:meta").toJSON();
-    const page = meta.pages.find((p: any) => p.title === title);
+export const getWorkspacePageMD = cache(
+  async (title: string): Promise<WorkspacePage | null> => {
+    try {
+      const start = performance.now();
+      console.log(
+        `getting page "${title}" from affine public workspace API ...`
+      );
 
-    if (!page) {
-      return null;
+      const yDoc = await getYDoc(workspaceId);
+      const meta = yDoc.getMap("space:meta").toJSON();
+      const page = meta.pages.find((p: any) => p.title === title);
+
+      if (!page) {
+        return null;
+      }
+
+      const yBlocks: YBlocks = yDoc.getMap(`space:${page.id}`);
+      const yPage = Array.from(yBlocks.values())[0];
+
+      const pageWithMD = {
+        ...page,
+        md: block2md(yPage, yBlocks),
+      };
+
+      const elapsed = (performance.now() - start).toFixed(2);
+
+      console.log(`got doc from affine public workspace API in ${elapsed}ms`);
+
+      return pageWithMD;
+    } catch {
+      throw new Error("could not get workspace doc");
     }
-
-    const yBlocks: YBlocks = yDoc.getMap(`space:${page.id}`);
-    const yPage = Array.from(yBlocks.values())[0];
-
-    const pageWithMD = {
-      ...page,
-      md: block2md(yPage, yBlocks)
-    }
-
-    const elapsed = (performance.now() - start).toFixed(2);
-
-    console.log(`got doc from affine public workspace API in ${elapsed}ms`);
-
-    return pageWithMD;
-  } catch {
-    throw new Error("could not get workspace doc");
   }
-});
+);
