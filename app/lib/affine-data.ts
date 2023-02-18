@@ -136,7 +136,7 @@ export const getWorkspacePages = cache(
       const pages = meta.pages as WorkspacePage[];
 
       pages.sort((a, b) => {
-        return b.createDate - a.createDate;
+        return a.createDate - b.createDate;
       });
 
       return meta.pages;
