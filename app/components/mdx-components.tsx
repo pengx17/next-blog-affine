@@ -1,13 +1,10 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import Image from "next/image";
 import { getTweetIdFromUrl } from "../lib/utils";
 
-import Link from "next/link";
 import { Tweet } from "react-static-tweets";
 import LinkPreview from "./link-preview";
 import { Popover } from "./popover";
-import { getPageById } from "../lib/notion-data";
 import { FloatingNote } from "./floating-note";
 import { TwitterTweetEmbed } from "./react-twitter-embed";
 import LinkPreviewClient from "./link-preview.client";
@@ -58,52 +55,6 @@ const Anchor = async ({
       const noteHTML = notes[noteId];
       const note = <div dangerouslySetInnerHTML={{ __html: noteHTML }} />;
       return <FloatingNote label={children}>{note}</FloatingNote>;
-    }
-  }
-
-  if ("link_to_page" === children) {
-    try {
-      const post = await getPageById(href, false);
-      if (post) {
-        return (
-          <Link
-            {...props}
-            className={cx(props.className, "underline decoration-dashed")}
-            href={"/posts/" + post.slug}
-          >
-            {post.name}
-          </Link>
-        );
-      }
-    } catch (__) {
-      // ignore
-    }
-  }
-
-  // transform notion links to nextjs links (if it is in the same database)
-  if (
-    href.startsWith("/posts/") ||
-    href.startsWith("https://www.notion.so/") ||
-    href.startsWith("/")
-  ) {
-    const pid = (href as string).split("/").pop();
-    if (pid) {
-      try {
-        const post = await getPageById(pid, false);
-        if (post) {
-          return (
-            <Link
-              {...props}
-              className={cx(props.className, "underline decoration-dashed")}
-              href={"/posts/" + post.slug}
-            >
-              {children}
-            </Link>
-          );
-        }
-      } catch (__) {
-        // ignore
-      }
     }
   }
 

@@ -1,46 +1,36 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
 
-import { use } from "react";
 import { getMdxComponents } from "../../../components/mdx-components";
 import { DateString } from "../../../date";
-import {
-  getPageById,
-  getPageMD,
-  getPostBySlug,
-  type PostProperties,
-} from "../../../lib/notion-data";
-import rehypeShiki from "../../../lib/rehype-shiki";
-import { cacheTwitterEmbedsAst } from "../../../lib/scan-embeds";
 
-export function PostRenderer({ id, name, date }: PostProperties) {
-  const { md, notes } = use(getPageMD(id));
-  // disable static cache
-  const tweetAstMap = {} ?? use(cacheTwitterEmbedsAst(md));
+import rehypeShiki from "../../../lib/rehype-shiki";
+import { WorkspacePage } from "../../../lib/affine-data";
+
+export function PostRenderer({ createDate, md, title }: WorkspacePage) {
   return (
     <>
       <h1 className="my-6 text-4xl font-serif font-bold leading-snug">
-        {name}
+        {title}
       </h1>
       <div className="text-gray-600 mb-8 ml-0.5">
-        <DateString dateString={date} />
+        <DateString dateString={createDate} />
       </div>
       {/* @ts-expect-error Server Component */}
       <MDXRemote
         options={{
           mdxOptions: {
             // development: process.env.NODE_ENV !== "production",
-            remarkPlugins: [remarkGfm],
+            remarkPlugins: [],
             rehypePlugins: [rehypeSlug, rehypeShiki],
           },
         }}
-        source={md}
+        source={md ?? ''}
         // @ts-expect-error Server Component
         components={getMdxComponents({
-          notes,
-          tweetAstMap,
+          notes: {},
+          tweetAstMap: {},
         })}
       />
     </>

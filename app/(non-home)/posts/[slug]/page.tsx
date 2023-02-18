@@ -1,8 +1,8 @@
-import { getPostBySlug, getPosts } from "../../../lib/notion-data";
+import { getWorkspacePageMD, getWorkspacePages } from "../../../lib/affine-data";
 import { PostRenderer } from "./post-renderer";
 
 export default async function Post({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+  const post = await getWorkspacePageMD(params.slug);
 
   if (!post) {
     return <div>404 not found</div>;
@@ -16,11 +16,11 @@ export default async function Post({ params }: { params: { slug: string } }) {
 }
 
 export async function generateStaticParams() {
-  const items = await getPosts();
-  return items.map((item) => ({
-    id: item.id,
-    slug: item.slug ?? item.id, // fallback to id if slug is not defined
+  const pages = await getWorkspacePages();
+  return pages.map((page) => ({
+    id: page.id,
+    slug: page.title,
   }));
 }
 
-export const revalidate = 60;
+export const revalidate = 10;
