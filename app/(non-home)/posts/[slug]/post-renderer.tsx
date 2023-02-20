@@ -1,3 +1,4 @@
+import { WorkspacePage } from "blocksuite-reader";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import rehypeSlug from "rehype-slug";
@@ -7,7 +8,6 @@ import { getMdxComponents } from "../../../components/mdx-components";
 import { DateString } from "../../../date";
 
 import rehypeShiki from "../../../lib/rehype-shiki";
-import { WorkspacePage } from "../../../lib/affine-data";
 
 export function PostRenderer({ createDate, md, title }: WorkspacePage) {
   return (
