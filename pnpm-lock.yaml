@@ -10,6 +10,7 @@ specifiers:
   '@vercel/analytics': ^0.1.10
   '@vercel/node': ^2.9.6
   autoprefixer: ^10.4.13
+  blocksuite-reader: ^0.0.1
   date-fns: ^2.29.3
   encoding: ^0.1.13
   eslint: ^8.34.0
@@ -60,6 +61,7 @@ devDependencies:
   '@vercel/analytics': 0.1.10_react@18.2.0
   '@vercel/node': 2.9.6_encoding@0.1.13
   autoprefixer: 10.4.13_postcss@8.4.21
+  blocksuite-reader: 0.0.1
   date-fns: 2.29.3
   encoding: 0.1.13
   eslint: 8.34.0
@@ -1490,6 +1492,12 @@ packages:
   /binary-extensions/2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
+    dev: true
+
+  /blocksuite-reader/0.0.1:
+    resolution: {integrity: sha512-49jB6ftDp0W0GI9lsajlr/VFA2B9HP5JU96z33INI2Zx2IIqL4WnULI4FzsaLJUgAYgHBPy7sob2kE1kiwvsBQ==}
+    dependencies:
+      yjs: 13.5.46
     dev: true
 
   /boolbase/1.0.0:
